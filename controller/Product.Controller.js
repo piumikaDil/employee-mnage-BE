@@ -2,23 +2,23 @@ const createErrors = require("http-errors")
 const mongoose = require("mongoose")
 
 
-const Product = require("../Models/Product.models")
+const Employee = require("../Models/Employee.models")
 
 module.exports = {
-    getAllProducts: async (req, res, next) => {
+    getAllEmployees: async (req, res, next) => {
 
         try {
             // const result = await Product.find({},{__v:0})
-            const result = await Product.find()
+            const result = await Employee.find()
             res.send(result)
         } catch (error) {
             console.log(error.message);
         }
     },
 
-    createNewProduct: async (req, res, next) => {
+    createNewEmployee: async (req, res, next) => {
         try {
-            const product = new Product(req.body)
+            const product = new Employee(req.body)
             const result = await product.save()
             res.send(result)
         } catch (error) {
@@ -29,30 +29,14 @@ module.exports = {
             }
             next(error)
         }
-
-        // const product = new Product({
-        //     name: req.body.name,
-        //     price: req.body.price
-        // })
-
-        // product.save()
-        //     .then(result => {
-        //         console.log(result);
-        //         res.send(result)
-        //     })
-        //     .catch(err => {
-        //         console.log(err.message);
-        //     })
-
     },
 
-    deleteProduct: async (req, res, next) => {
+    deleteEmployee: async (req, res, next) => {
         try {
-            const result = await Product.findByIdAndDelete(req.params.id)
+            const result = await Employee.findByIdAndDelete(req.params.id)
 
             if (!result) {
                 throw createErrors(404, "Product does not exists")
-
             }
             res.send(result)
         } catch (error) {
@@ -66,13 +50,13 @@ module.exports = {
 
     },
 
-    updateProduct: async (req, res, next) => {
+    updateEmployee: async (req, res, next) => {
         try {
             const id = req.params.id
             const updates = req.body
             const option = { new: true }
 
-            const result = await Product.findByIdAndUpdate(id, updates, option)
+            const result = await Employee.findByIdAndUpdate(id, updates, option)
             if (!result) {
                 throw createErrors(404, "Product does not exists")
 
@@ -88,10 +72,10 @@ module.exports = {
         }
     },
 
-    getOneProduct: async (req, res, next) => {
+    getOneEmployee: async (req, res, next) => {
         try {
             // const result = await Product.findOne({_id:req.params.id})
-            const product = await Product.findById(req.params.id)
+            const product = await Employee.findById(req.params.id)
             if (!product) {
                 throw createErrors(404, "Product does not exists")
             }

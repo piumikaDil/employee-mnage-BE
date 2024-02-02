@@ -3,10 +3,10 @@ const router = express.Router()
 
 const ProductController = require("../controller/Product.Controller")
 
-router.get("/", ProductController.getAllProducts)
-router.post("/", ProductController.createNewProduct)
-router.delete("/:id", ProductController.deleteProduct)
-router.patch("/:id", ProductController.updateProduct )
-router.get("/:id",ProductController.getOneProduct )
+router.get("/get", ProductController.getAllEmployees)
+router.post("/save", ProductController.createNewEmployee)
+router.delete("/:id", ProductController.deleteEmployee)
+router.patch("/:id", ProductController.updateEmployee )
+router.get("/:id",ProductController.getOneEmployee )
 
 module.exports = router
