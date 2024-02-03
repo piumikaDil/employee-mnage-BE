@@ -6,9 +6,7 @@ const Employee = require("../Models/Employee.models")
 
 module.exports = {
     getAllEmployees: async (req, res, next) => {
-
         try {
-            // const result = await Product.find({},{__v:0})
             const result = await Employee.find()
             res.send(result)
         } catch (error) {
@@ -47,7 +45,6 @@ module.exports = {
             }
             next(error)
         }
-
     },
 
     updateEmployee: async (req, res, next) => {
@@ -59,7 +56,6 @@ module.exports = {
             const result = await Employee.findByIdAndUpdate(id, updates, option)
             if (!result) {
                 throw createErrors(404, "Product does not exists")
-
             }
             res.send(result)
         } catch (error) {
@@ -74,13 +70,15 @@ module.exports = {
 
     getOneEmployee: async (req, res, next) => {
         try {
-            // const result = await Product.findOne({_id:req.params.id})
-            const product = await Employee.findById(req.params.id)
-            if (!product) {
-                throw createErrors(404, "Product does not exists")
-            }
-            console.log(product);
-            res.send(result)
+            console.log(req.params.key);
+            // console.log(req.params.name);
+            // const result = await Product.findOne({employeeName:req.params.name})
+            // // const product = await Employee.findById(req.params.id)
+            // if (!product) {
+            //     throw createErrors(404, "Product does not exists")
+            // }
+            // console.log(product);
+            // res.send(result)
         } catch (error) {
             console.log(error.message);
             if (error instanceof mongoose.CastError) {
