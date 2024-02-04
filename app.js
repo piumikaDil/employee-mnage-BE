@@ -15,7 +15,10 @@ require("./initDB")()
 const PORT = process.env.PORT || 3000;
 
 const productRoute = require("./Routes/Product.route")
+const siteRoute = require("./Routes/Site.route")
+
 app.use("/employee", productRoute)
+app.use("/site", siteRoute)
 
 app.use((req, res, next) => {
     next(createErrors(404,"Not found"))

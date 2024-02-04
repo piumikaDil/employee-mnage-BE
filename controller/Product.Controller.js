@@ -32,7 +32,6 @@ module.exports = {
     deleteEmployee: async (req, res, next) => {
         try {
             const result = await Employee.findByIdAndDelete(req.params.id)
-
             if (!result) {
                 throw createErrors(404, "Product does not exists")
             }
@@ -70,15 +69,15 @@ module.exports = {
 
     getOneEmployee: async (req, res, next) => {
         try {
-            console.log(req.params.key);
-            // console.log(req.params.name);
-            // const result = await Product.findOne({employeeName:req.params.name})
-            // // const product = await Employee.findById(req.params.id)
-            // if (!product) {
-            //     throw createErrors(404, "Product does not exists")
-            // }
-            // console.log(product);
-            // res.send(result)
+            let result = await Employee.find({
+                "$or": [
+                    { employeeName: { $regex: req.params.key } }
+                ]
+            })
+            if(!result) {
+                throw createErrors(404, "Product does not exists")
+            }
+            res.send(result);
         } catch (error) {
             console.log(error.message);
             if (error instanceof mongoose.CastError) {
