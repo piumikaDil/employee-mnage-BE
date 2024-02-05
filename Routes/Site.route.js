@@ -6,7 +6,7 @@ const SiteController = require("../controller/Sites.Controller")
 router.get("/", SiteController.getAllESites)
 router.post("/", SiteController.createNewSite)
 // router.delete("/:id", ProductController.deleteEmployee)
-// router.put("/:id", ProductController.updateEmployee )
+router.put("/:id", SiteController.updateSite )
 router.get("/:key",SiteController.getOneSite )
 
 module.exports = router
