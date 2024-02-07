@@ -3,7 +3,7 @@ const router = express.Router()
 
 const AttendanceController = require("../controller/Attendance.Controller")
 
-router.get("/", AttendanceController.createAttendance)
+router.post("/", AttendanceController.createAttendance)
 
 
 module.exports = router

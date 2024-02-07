@@ -20,7 +20,7 @@ const attendanceRoute = require("./Routes/Attendance.route")
 
 app.use("/employee", productRoute)
 app.use("/site", siteRoute)
-app.use("/site", attendanceRoute)
+app.use("/attendance", attendanceRoute)
 
 app.use((req, res, next) => {
     next(createErrors(404,"Not found"))
