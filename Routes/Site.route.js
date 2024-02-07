@@ -5,7 +5,7 @@ const SiteController = require("../controller/Sites.Controller")
 
 router.get("/", SiteController.getAllESites)
 router.post("/", SiteController.createNewSite)
-// router.delete("/:id", ProductController.deleteEmployee)
+router.delete("/:id", SiteController.deleteSite)
 router.put("/:id", SiteController.updateSite )
 router.get("/:key",SiteController.getOneSite )
 

@@ -16,9 +16,11 @@ const PORT = process.env.PORT || 3000;
 
 const productRoute = require("./Routes/Product.route")
 const siteRoute = require("./Routes/Site.route")
+const attendanceRoute = require("./Routes/Attendance.route")
 
 app.use("/employee", productRoute)
 app.use("/site", siteRoute)
+app.use("/site", attendanceRoute)
 
 app.use((req, res, next) => {
     next(createErrors(404,"Not found"))

@@ -75,10 +75,6 @@ module.exports = {
             res.send(result)
         } catch (error) {
             console.log(error.message);
-            if (error instanceof mongoose.CastError) {
-                next(createErrors(400, "Invalid product id"))
-                return
-            }
             next(error)
         }
     },

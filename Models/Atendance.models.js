@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const employeeSchema = new Schema({
+const attendanceSchema = new Schema({
    id: {
         type: String,
         requred: true
@@ -27,5 +27,5 @@ const employeeSchema = new Schema({
     },
 })
 
-const Employee = mongoose.model('product',employeeSchema)
-module.exports = Employee
+const attendance = mongoose.model('attendance',attendanceSchema)
+module.exports = attendance
