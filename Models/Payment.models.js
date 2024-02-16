@@ -4,19 +4,36 @@ const Schema = mongoose.Schema;
 const paymentSchema = new Schema({
   starDate: {
     type: Date,
-    required: true,
   },
   endDate: {
     type: Date,
-    required: true,
   },
   siteId: {
     type: String,
-    required: true,
   },
   employee: {
     type: Array,
-    required: true,
+  },
+  employeeId: {
+    type: String,
+  },
+  employeeName: {
+    type: String,
+  },
+  totalDays: {
+    type: Number,
+  },
+  totalOverTime: {
+    type: Number,
+  },
+  overTimePay: {
+    type: Number,
+  },
+  netPay: {
+    type: Number,
+  },
+  payDate: {
+    type: Date,
   },
 });
 
