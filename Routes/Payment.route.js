@@ -5,5 +5,6 @@ const PaymentController = require("../controller/Payment.Controller");
 
 router.post("/", PaymentController.createPayment);
 router.get("/", PaymentController.getAllPaymentDetails);
+router.get("/:id", PaymentController.getPaymentById);
 
 module.exports = router;

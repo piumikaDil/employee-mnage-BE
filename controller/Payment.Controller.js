@@ -18,16 +18,15 @@ module.exports = {
     const formattedDate = `${year}-${month}-${day}`;
 
     try {
-      console.log(req.body);
-
       const { startDate, endDate, siteId } = req.body;
 
-      const paymentExists = await Payment.findOne({
-        date: { $gte: startDate, $lte: endDate },
+      const paymentExists = await payment.findOne({
+        startDate: { $gte: startDate },
+        endDate: { $lte: endDate },
         siteId: siteId,
       });
 
-      console.log("date : ", startDate, endDate);
+      console.log(paymentExists);
 
       if (paymentExists) {
         next(
@@ -39,8 +38,41 @@ module.exports = {
         return;
       }
 
+      const paymentsDetails = new payment({
+        startDate,
+        endDate,
+        siteId,
+      });
+      await paymentsDetails.save();
+      res.send("Done");
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        next(createErrors(422, error.message));
+        return;
+      }
+      next(error);
+    }
+  },
+
+  getAllPaymentDetails: async (req, res, next) => {
+    try {
+      const result = await payment.find();
+      res.send(result);
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  getPaymentById: async (req, res, next) => {
+    try {
+      const result = await payment.findById(req.params.id);
+      if (!result) {
+        throw createErrors(404, "Payment does not exists");
+      }
+
+      console.log(result);
+      const { startDate, endDate, siteId } = result;
       const employees = await Employee.find({ site: siteId });
-      console.log(employees);
 
       const returnList = [];
 
@@ -53,7 +85,6 @@ module.exports = {
         });
 
         attendances.map((attendance) => {
-          console.log("Attendance : ", attendance);
           const { employeeId, employeeName, inTime, outTime } = attendance;
           const timeInParts = inTime.split(":");
           const timeOutParts = outTime.split(":");
@@ -72,8 +103,6 @@ module.exports = {
 
           const overtimeWork = diffHours > 8 ? diffHours - 8 : 0;
           totalOvertime += overtimeWork;
-
-          console.log("aaaaaaaa", attendances);
         });
 
         returnList.push({
@@ -86,38 +115,16 @@ module.exports = {
         });
       });
 
-      const paymentsDetails = new payment({
-        employeeId: "E#3232",
-        employeeName: "Test",
-        totalDays: 5,
-        totalOverTime: 1,
-        overTimePay: 1,
-        netPay: 23444,
-        payDate: formattedDate,
-      });
-      const re = await paymentsDetails.save();
-      res.send(re);
-
       await Promise.all(fetchPromises);
 
       res.send(returnList);
-      console.log(returnList);
     } catch (error) {
       console.log(error.message);
-      if (error.name === "ValidationError") {
-        next(createErrors(422, error.message));
+      if (error instanceof mongoose.CastError) {
+        next(createErrors(400, "Invalid payment id"));
         return;
       }
       next(error);
-    }
-  },
-
-  getAllPaymentDetails: async (req, res, next) => {
-    try {
-      const result = await payment.find();
-      res.send(result);
-    } catch (error) {
-      console.log(error.message);
     }
   },
 };
